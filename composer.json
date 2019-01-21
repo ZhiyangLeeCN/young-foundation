@@ -1,0 +1,17 @@
+{
+    "name": "zhiyang/young-foundation",
+    "authors": [
+        {
+            "name": "ZhiyangLeeCN",
+            "email": "zhiyangleeCN@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "YoungFoundation\\" : "src/"
+        }
+    },
+    "require": {
+        "hprose/hprose": ">=2.0.0"
+    }
+}
