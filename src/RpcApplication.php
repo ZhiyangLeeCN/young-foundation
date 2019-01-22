@@ -18,68 +18,17 @@ class RpcApplication
     private $rpcHttpServer;
 
     /**
-     *  需要发布的方法
-     *
-     * @var array
+     * @var RpcRegister
      */
-    private $registerFuncs = [];
+    private $rpcRegister;
 
     /**
      * RpcApplication constructor.
+     * @param RpcRegister $rpcRegister
      */
-    public function __construct()
+    public function __construct(RpcRegister $rpcRegister)
     {
-        $this->rpcHttpServer = new Server();
-    }
-
-    /**
-     *  注册一个同步方法
-     *
-     * @param $func
-     * @param string $alias
-     * @throws \Exception
-     */
-    public function registerSync($func, $alias = '')
-    {
-        $this->registerFuncs[] = [
-            'func'      =>  $func,
-            'alias'     =>  $alias,
-            'options'   =>  []
-        ];
-    }
-
-    /**
-     *  注册一个异步方法
-     *
-     * @param $func
-     * @param string $alias
-     */
-    public function registerAsync($func, $alias = '')
-    {
-        $this->registerFuncs[] = [
-            'func'      =>  $func,
-            'alias'     =>  $alias,
-            'options'   =>  [
-                'async' =>  true
-            ]
-        ];
-    }
-
-    /**
-     *  注册一个oneway方法(只管发送，不等待服务器返回)
-     *
-     * @param $func
-     * @param string $alias
-     */
-    public function registerOneway($func, $alias = '')
-    {
-        $this->registerFuncs[] = [
-            'func'      =>  $func,
-            'alias'     =>  $alias,
-            'options'   =>  [
-                'oneway' =>  true
-            ]
-        ];
+        $this->rpcRegister = $rpcRegister;
     }
 
     /**
@@ -89,7 +38,7 @@ class RpcApplication
      */
     public function publish()
     {
-        foreach ($this->registerFuncs as $registerFunc) {
+        foreach ($this->rpcRegister as $registerFunc) {
 
             $this->rpcHttpServer->addFunction(
                 $registerFunc['func'],
