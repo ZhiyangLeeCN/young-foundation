@@ -29,6 +29,7 @@ class RpcApplication
      */
     public function addRpcRegister(RpcRegister $rpcRegister)
     {
+        $this->rpcHttpServer = new Server();
         $this->rpcRegisters[] = $rpcRegister;
     }
 
