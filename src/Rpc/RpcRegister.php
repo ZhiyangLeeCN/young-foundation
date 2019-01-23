@@ -4,7 +4,7 @@
  * email: zhiyanglee@foxmail.com
  */
 
-namespace YoungFoundation;
+namespace YoungFoundation\Rpc;
 
 
 class RpcRegister implements \IteratorAggregate

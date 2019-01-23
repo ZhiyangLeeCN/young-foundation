@@ -5,7 +5,7 @@
  * email: zhiyanglee@foxmail.com
  */
 
-namespace YoungFoundation;
+namespace YoungFoundation\Rpc;
 
 use Hprose\Http\Server;
 
@@ -20,15 +20,16 @@ class RpcApplication
     /**
      * @var RpcRegister
      */
-    private $rpcRegister;
+    private $rpcRegisters;
 
     /**
-     * RpcApplication constructor.
+     *  添加RPC注册器
+     *
      * @param RpcRegister $rpcRegister
      */
-    public function __construct(RpcRegister $rpcRegister)
+    public function addRpcRegister(RpcRegister $rpcRegister)
     {
-        $this->rpcRegister = $rpcRegister;
+        $this->rpcRegisters[] = $rpcRegister;
     }
 
     /**
@@ -38,13 +39,17 @@ class RpcApplication
      */
     public function publish()
     {
-        foreach ($this->rpcRegister as $registerFunc) {
+        foreach ($this->rpcRegisters as $rpcRegister) {
 
-            $this->rpcHttpServer->addFunction(
-                $registerFunc['func'],
-                $registerFunc['alias'],
-                $registerFunc['options']
-            );
+            foreach ($rpcRegister as $registerFunc) {
+
+                $this->rpcHttpServer->addFunction(
+                    $registerFunc['func'],
+                    $registerFunc['alias'],
+                    $registerFunc['options']
+                );
+
+            }
 
         }
     }
